@@ -8,4 +8,4 @@ abstract class MovieEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchDataEvent extends MovieEvent {}
+class FetchMovieDataEvent extends MovieEvent {}

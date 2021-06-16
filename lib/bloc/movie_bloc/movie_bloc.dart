@@ -1,17 +1,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:movie_app/data/models/movie/movie_result.dart';
-import 'package:movie_app/data/repositories/movie_repository.dart';
+import 'package:movie_app/data/repositories/resporitory.dart';
 
 part 'movie_event.dart';
 part 'movie_state.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
-  final MovieRepository repository;
+  final Repository repository;
   MovieBloc({required this.repository}) : super(MovieInitial());
 
   @override

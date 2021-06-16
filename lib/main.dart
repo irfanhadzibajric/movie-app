@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
-import 'package:movie_app/data/repositories/movie_repository.dart';
+import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
+import 'package:movie_app/data/repositories/resporitory.dart';
 import 'package:movie_app/screens/home_screen.dart';
 
 void main() {
@@ -24,9 +25,17 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
-        body: BlocProvider(
-          create: (context) =>
-              MovieBloc(repository: MovieRepository())..add(FetchDataEvent()),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => MovieBloc(repository: Repository())
+                ..add(FetchMovieDataEvent()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  ShowBloc(repository: Repository())..add(FetchShowDataEvent()),
+            ),
+          ],
           child: HomeScreen(),
         ),
       ),
