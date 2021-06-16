@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:movie_app/data/models/movie/movie_result.dart';
@@ -21,7 +21,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     try {
       yield MovieLoadingState();
       var movies = await repository.getMovies();
-      yield MovieLoadedState(movies);
+      yield MovieLoadedState(movies['results']);
     } catch (e) {
       yield MovieErrorState(e.toString());
     }
