@@ -18,68 +18,71 @@ class _HomeScreenState extends State<HomeScreen> {
     var mediaQuery = MediaQuery.of(context).size;
     return Container(
       height: mediaQuery.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SearchBox(),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.46,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        setState(() {
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SearchBox(isMovie: this.movieActive),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.46,
+                      child: OutlinedButton(
+                        onPressed: () {
                           this.movieActive = true;
-                        });
-                      },
-                      child: Text(
-                        'Movies',
-                        style: TextStyle(
-                            color:
-                                this.movieActive ? Colors.white : Colors.blue),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor:
-                            this.movieActive ? Colors.blue : Colors.transparent,
-                        side: BorderSide(
-                          width: 1.0,
-                          color: Colors.blue,
-                          style: BorderStyle.solid,
+                          setState(() {});
+                        },
+                        child: Text(
+                          'Movies',
+                          style: TextStyle(
+                              color: this.movieActive
+                                  ? Colors.white
+                                  : Colors.blue),
                         ),
-                      ),
-                    )),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.46,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        setState(() {
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: this.movieActive
+                              ? Colors.blue
+                              : Colors.transparent,
+                          side: BorderSide(
+                            width: 1.0,
+                            color: Colors.blue,
+                            style: BorderStyle.solid,
+                          ),
+                        ),
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.46,
+                      child: OutlinedButton(
+                        onPressed: () {
                           this.movieActive = false;
-                        });
-                      },
-                      child: Text(
-                        'TV shows',
-                        style: TextStyle(
-                            color:
-                                !this.movieActive ? Colors.white : Colors.blue),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: !this.movieActive
-                            ? Colors.blue
-                            : Colors.transparent,
-                        side: BorderSide(
-                          width: 1.0,
-                          color: Colors.blue,
-                          style: BorderStyle.solid,
+                          setState(() {});
+                        },
+                        child: Text(
+                          'TV shows',
+                          style: TextStyle(
+                              color: !this.movieActive
+                                  ? Colors.white
+                                  : Colors.blue),
                         ),
-                      ),
-                    )),
-              ],
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: !this.movieActive
+                              ? Colors.blue
+                              : Colors.transparent,
+                          side: BorderSide(
+                            width: 1.0,
+                            color: Colors.blue,
+                            style: BorderStyle.solid,
+                          ),
+                        ),
+                      )),
+                ],
+              ),
             ),
-          ),
-          this.movieActive ? MovieScreen() : ShowScreen(),
-        ],
+            this.movieActive ? MovieScreen() : ShowScreen(),
+          ],
+        ),
       ),
     );
   }

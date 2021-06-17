@@ -13,7 +13,7 @@ class MovieScreen extends StatelessWidget {
       if (state is MovieInitial || state is MovieLoadingState) {
         return LoadingIndicatior();
       } else if (state is MovieLoadedState) {
-        return CardList(state.movies, true);
+        return ItemList(state.movies, true);
       } else {
         return Text('Error');
       }

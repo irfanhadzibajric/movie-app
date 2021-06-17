@@ -13,7 +13,7 @@ class ShowScreen extends StatelessWidget {
       if (state is ShowInitial || state is ShowLoadingState) {
         return LoadingIndicatior();
       } else if (state is ShowLoadedState) {
-        return CardList(state.shows, false);
+        return ItemList(state.shows, false);
       } else {
         return Text('Error');
       }
