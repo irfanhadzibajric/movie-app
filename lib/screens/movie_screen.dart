@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
+import 'package:movie_app/screens/error_screen.dart';
 import 'package:movie_app/widgets/item_list.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
 
@@ -14,8 +15,12 @@ class MovieScreen extends StatelessWidget {
         return LoadingIndicatior();
       } else if (state is MovieLoadedState) {
         return ItemList(state.movies, true);
+      } else if (state is MovieErrorState) {
+        return ErrorScreen(
+          message: state.message,
+        );
       } else {
-        return Text('Error');
+        return Text('');
       }
     });
   }

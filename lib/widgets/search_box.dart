@@ -136,6 +136,7 @@ class ItemSearch extends SearchDelegate<dynamic> {
 
   Widget buildSuggestionsSuccess(List<dynamic> suggestions) => ListView.builder(
       itemCount: suggestions.length,
+      physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         final suggestion = suggestions[index];
         const imgBase = "https://image.tmdb.org/t/p/w500";

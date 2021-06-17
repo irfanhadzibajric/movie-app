@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
 import 'package:movie_app/data/repositories/resporitory.dart';
+import 'package:movie_app/screens/error_screen.dart';
 import 'package:movie_app/screens/home_screen.dart';
 
 void main() {

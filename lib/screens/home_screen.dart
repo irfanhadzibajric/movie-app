@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: mediaQuery.height,
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

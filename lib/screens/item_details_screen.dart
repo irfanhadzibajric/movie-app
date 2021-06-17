@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
 import 'package:movie_app/data/repositories/resporitory.dart';
+import 'package:movie_app/screens/error_screen.dart';
 import 'package:movie_app/widgets/item_info.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
 
@@ -43,8 +44,12 @@ class MovieDetails extends StatelessWidget {
                   return LoadingIndicatior();
                 } else if (state is SingleMovieLoadedState) {
                   return ItemInfo(isMovie: true, item: state.movie);
+                } else if (state is SingleMovieErrorState) {
+                  return ErrorScreen(
+                    message: state.message,
+                  );
                 } else {
-                  return Text('Error');
+                  return Text('');
                 }
               }),
             )
@@ -57,8 +62,12 @@ class MovieDetails extends StatelessWidget {
                   return LoadingIndicatior();
                 } else if (state is SingleShowLoadedState) {
                   return ItemInfo(isMovie: false, item: state.show);
+                } else if (state is SingleShowErrorState) {
+                  return ErrorScreen(
+                    message: state.message,
+                  );
                 } else {
-                  return Text('Error');
+                  return Text('');
                 }
               }),
             ),

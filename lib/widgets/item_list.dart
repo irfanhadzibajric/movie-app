@@ -23,8 +23,7 @@ class ItemList extends StatelessWidget {
                   thickness: 0.8,
                 ),
               ),
-          physics: BouncingScrollPhysics(),
-          scrollDirection: Axis.vertical,
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) {
