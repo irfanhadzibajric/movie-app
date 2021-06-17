@@ -16,12 +16,22 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   Stream<MovieState> mapEventToState(
     MovieEvent event,
   ) async* {
-    try {
-      yield MovieLoadingState();
-      var movies = await repository.getMovies();
-      yield MovieLoadedState(movies['results']);
-    } catch (e) {
-      yield MovieErrorState(e.toString());
+    if (event is FetchMovieDataEvent) {
+      try {
+        yield MovieLoadingState();
+        var movies = await repository.getMovies();
+        yield MovieLoadedState(movies['results']);
+      } catch (e) {
+        yield MovieErrorState(e.toString());
+      }
+    } else if (event is FetchSingleMovieDataEvent) {
+      try {
+        yield SingleMovieLoadingState();
+        var movie = await repository.getMovieById(event.movieId);
+        yield SingleMovieLoadedState(movie);
+      } catch (e) {
+        yield SingleMovieErrorState(e.toString());
+      }
     }
   }
 }

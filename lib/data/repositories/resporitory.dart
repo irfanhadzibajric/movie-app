@@ -22,4 +22,12 @@ class Repository {
   Future<dynamic> getShows() {
     return _apiClient.getTopRatedShows(apiKey);
   }
+
+  Future<dynamic> getMovieById(int movieId) {
+    return _apiClient.getMovieById(apiKey, movieId);
+  }
+
+  Future<dynamic> getShowById(showId) {
+    return _apiClient.getShowById(apiKey, showId);
+  }
 }

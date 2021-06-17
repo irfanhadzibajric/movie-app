@@ -9,3 +9,11 @@ abstract class ShowEvent extends Equatable {
 }
 
 class FetchShowDataEvent extends ShowEvent {}
+
+class FetchSingleShowDataEvent extends ShowEvent {
+  final int showId;
+  FetchSingleShowDataEvent({required this.showId});
+
+  @override
+  List<Object> get props => [showId];
+}

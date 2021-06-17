@@ -16,7 +16,7 @@ class ShowLoadingState extends ShowState {}
 
 class ShowLoadedState extends ShowState {
   // TODO: change dynamic to showresult
-  dynamic shows;
+  final dynamic shows;
 
   ShowLoadedState(this.shows);
 
@@ -25,9 +25,28 @@ class ShowLoadedState extends ShowState {
 }
 
 class ShowErrorState extends ShowState {
-  String message;
+  final String message;
 
   ShowErrorState(this.message);
+  @override
+  List<Object> get props => [message];
+}
+
+class SingleShowLoadingState extends ShowState {}
+
+class SingleShowLoadedState extends ShowState {
+  final dynamic show;
+
+  SingleShowLoadedState(this.show);
+
+  @override
+  List<Object> get props => [show];
+}
+
+class SingleShowErrorState extends ShowState {
+  final String message;
+
+  SingleShowErrorState(this.message);
   @override
   List<Object> get props => [message];
 }
