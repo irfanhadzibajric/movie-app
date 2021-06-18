@@ -25,20 +25,18 @@ class ItemInfo extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(top: 20, left: 10),
-            height: mediaQurey.height * 0.1,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               '${isMovie ? item['title'] : item['name']}',
               style: TextStyle(
-                fontSize: 28,
+                fontSize: mediaQurey.height * 0.04,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(top: 0, left: 10),
-            height: mediaQurey.height * 0.4,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               '${item['overview']}',
               style: TextStyle(

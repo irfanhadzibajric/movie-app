@@ -6,8 +6,10 @@ part 'api_client.g.dart';
 class Apis {
   static const String topRatedMovies = "movie/top_rated";
   static const String topRatedShows = "tv/top_rated";
-  static const String movieById = "/movie/{movieId}";
-  static const String showById = "/tv/{showId}";
+  static const String movieById = "movie/{movieId}";
+  static const String showById = "tv/{showId}";
+  static const String movieSearchResult = "search/movie";
+  static const String showSearchResult = "search/tv";
 }
 
 @RestApi(baseUrl: "https://api.themoviedb.org/3/")
@@ -29,4 +31,12 @@ abstract class ApiClient {
   @GET(Apis.showById)
   Future<dynamic> getShowById(
       @Query("api_key") String apiKey, @Path() int showId);
+
+  @GET(Apis.movieSearchResult)
+  Future<dynamic> getMovieSearchResult(
+      @Query("api_key") String apiKey, @Query("query") String searchString);
+
+  @GET(Apis.showSearchResult)
+  Future<dynamic> getShowSearchResult(
+      @Query("api_key") String apiKey, @Query("query") String searchString);
 }

@@ -27,7 +27,15 @@ class Repository {
     return _apiClient.getMovieById(apiKey, movieId);
   }
 
-  Future<dynamic> getShowById(showId) {
+  Future<dynamic> getShowById(int showId) {
     return _apiClient.getShowById(apiKey, showId);
+  }
+
+  Future<dynamic> getMovieSearchResult(String query) {
+    return _apiClient.getMovieSearchResult(apiKey, query);
+  }
+
+  Future<dynamic> getShowSearchResult(String query) {
+    return _apiClient.getShowSearchResult(apiKey, query);
   }
 }

@@ -25,7 +25,7 @@ class ItemList extends StatelessWidget {
               ),
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: 10,
+          itemCount: itemList.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
@@ -78,21 +78,23 @@ class ItemList extends StatelessWidget {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                isMovie
-                                    ? '${itemList[index]['title']}'
-                                    : '${itemList[index]['name']}',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                softWrap: false,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
+                              Container(
+                                width: mediaQuery.width * 0.55,
+                                child: Text(
+                                  isMovie
+                                      ? '${itemList[index]['title']}'
+                                      : '${itemList[index]['name']}',
+                                  style: TextStyle(
+                                    fontSize: mediaQuery.height * 0.023,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                               Text(
                                 'Description',
-                                style: TextStyle(color: Colors.grey[500]),
+                                style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontSize: mediaQuery.height * 0.015),
                               )
                             ],
                           ),

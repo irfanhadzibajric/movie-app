@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
-import 'package:movie_app/data/repositories/resporitory.dart';
+import 'package:movie_app/data/repository/resporitory.dart';
 import 'package:movie_app/screens/error_screen.dart';
 import 'package:movie_app/widgets/item_info.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';

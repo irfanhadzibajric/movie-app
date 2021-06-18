@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
+import 'package:movie_app/bloc/search_bloc/search_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
-import 'package:movie_app/screens/item_details_screen.dart';
+import 'package:movie_app/screens/error_screen.dart';
+import 'package:movie_app/widgets/item_list.dart';
+import 'package:movie_app/widgets/loading_indicator.dart';
 
 class SearchBox extends StatelessWidget {
   final bool isMovie;
-  const SearchBox({Key? key, required this.isMovie}) : super(key: key);
-
+  SearchBox({required this.isMovie});
   @override
   Widget build(BuildContext context) {
     return isMovie
@@ -28,7 +29,8 @@ class SearchBox extends StatelessWidget {
                           FocusScope.of(context).requestFocus(FocusNode());
                           showSearch(
                               context: context,
-                              delegate: ItemSearch(state.movies, isMovie));
+                              delegate: ItemSearch(state.movies, isMovie,
+                                  BlocProvider.of<SearchBloc>(context)));
                         },
                         decoration: InputDecoration(
                             isDense: true,
@@ -61,7 +63,8 @@ class SearchBox extends StatelessWidget {
                           FocusScope.of(context).requestFocus(FocusNode());
                           showSearch(
                               context: context,
-                              delegate: ItemSearch(state.shows, isMovie));
+                              delegate: ItemSearch(state.shows, isMovie,
+                                  BlocProvider.of<SearchBloc>(context)));
                         },
                         decoration: InputDecoration(
                             isDense: true,
@@ -84,7 +87,8 @@ class SearchBox extends StatelessWidget {
 class ItemSearch extends SearchDelegate<dynamic> {
   final List<dynamic> items;
   final bool isMovie;
-  ItemSearch(this.items, this.isMovie);
+  SearchBloc searchBloc;
+  ItemSearch(this.items, this.isMovie, this.searchBloc);
 
   List<Widget> buildActions(BuildContext context) => [
         IconButton(
@@ -105,123 +109,46 @@ class ItemSearch extends SearchDelegate<dynamic> {
       );
 
   @override
-  Widget buildResults(BuildContext context) => Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(query),
-        ],
-      ));
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestions = isMovie
-        ? query.isEmpty
-            ? items
-            : items.where((item) {
-                final itemTitleLower = item['title'].toString().toLowerCase();
-                final queryLower = query.toLowerCase();
-                return itemTitleLower.startsWith(queryLower);
-              }).toList()
-        : query.isEmpty
-            ? items
-            : items.where((item) {
-                final itemTitleLower = item['name'].toString().toLowerCase();
-                final queryLower = query.toLowerCase();
-                return itemTitleLower.startsWith(queryLower);
-              }).toList();
+    isMovie
+        ? searchBloc.add(FetchSearchMovieEvent(query: query))
+        : searchBloc.add(FetchSearchShowEvent(query: query));
 
-    return buildSuggestionsSuccess(suggestions);
+    return isMovie
+        ? query.length > 3
+            ? BlocBuilder(
+                bloc: searchBloc,
+                builder: (BuildContext context, SearchState state) {
+                  if (state is SearchMovieLoadingState) {
+                    return LoadingIndicatior();
+                  } else if (state is SearchMovieErrorState) {
+                    return ErrorScreen(message: state.message);
+                  } else if (state is SearchMovieLoadedState) {
+                    return ItemList(state.movies, isMovie);
+                  } else {
+                    return Text('');
+                  }
+                })
+            : ItemList(items, isMovie)
+        : query.length > 3
+            ? BlocBuilder(
+                bloc: searchBloc,
+                builder: (BuildContext context, SearchState state) {
+                  if (state is SearchShowLoadingState) {
+                    return LoadingIndicatior();
+                  } else if (state is SearchShowErrorState) {
+                    return ErrorScreen(message: state.message);
+                  } else if (state is SearchShowLoadedState) {
+                    return ItemList(state.shows, isMovie);
+                  } else {
+                    return Text('');
+                  }
+                })
+            : ItemList(items, isMovie);
   }
-
-  Widget buildSuggestionsSuccess(List<dynamic> suggestions) => ListView.builder(
-      itemCount: suggestions.length,
-      physics: BouncingScrollPhysics(),
-      itemBuilder: (context, index) {
-        final suggestion = suggestions[index];
-        const imgBase = "https://image.tmdb.org/t/p/w500";
-        goToItemDetails(int id, bool isMovie) {
-          Get.to(() => MovieDetails(id: id, isMovie: isMovie));
-        }
-
-        return InkWell(
-          onTap: () {
-            goToItemDetails(suggestion['id'], isMovie);
-          },
-          child: Container(
-              height: 90.0,
-              color: Colors.transparent,
-              padding: EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(
-                                    '$imgBase${suggestion['poster_path']}'))),
-                      ),
-                      SizedBox(
-                        width: 7,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            '${index + 1}',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 7,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            isMovie
-                                ? '${suggestion['title']}'
-                                : '${suggestion['name']}',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            softWrap: false,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            'Description',
-                            style: TextStyle(color: Colors.grey[500]),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        goToItemDetails(suggestion['id'], isMovie);
-                      },
-                      icon: Icon(Icons.chevron_right))
-                ],
-              )),
-        );
-      });
 }
