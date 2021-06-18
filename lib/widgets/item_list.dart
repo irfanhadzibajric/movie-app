@@ -79,7 +79,7 @@ class ItemList extends StatelessWidget {
                                 height: 10,
                               ),
                               Container(
-                                width: mediaQuery.width * 0.55,
+                                width: mediaQuery.width * 0.50,
                                 child: Text(
                                   isMovie
                                       ? '${itemList[index]['title']}'

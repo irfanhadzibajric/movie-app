@@ -1,89 +1,122 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screens/movie_screen.dart';
-
-import 'package:movie_app/screens/show_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
+import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
+import 'package:movie_app/widgets/item_list.dart';
+import 'package:movie_app/widgets/loading_indicator.dart';
 import 'package:movie_app/widgets/search_box.dart';
+import 'package:movie_app/widgets/tab_button.dart';
+
+import 'error_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool movieActive = true;
+  int _selectedPage = 0;
+  late PageController _pageController;
+
+  void _changePage(int pageNum) {
+    setState(() {
+      _selectedPage = pageNum;
+      _pageController.animateToPage(
+        pageNum,
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.fastLinearToSlowEaseIn,
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    _pageController = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context).size;
     return Container(
-      height: mediaQuery.height,
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SearchBox(isMovie: this.movieActive),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      width: MediaQuery.of(context).size.width * 0.46,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          this.movieActive = true;
-                          setState(() {});
-                        },
-                        child: Text(
-                          'Movies',
-                          style: TextStyle(
-                              color: this.movieActive
-                                  ? Colors.white
-                                  : Colors.blue),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: this.movieActive
-                              ? Colors.blue
-                              : Colors.transparent,
-                          side: BorderSide(
-                            width: 1.0,
-                            color: Colors.blue,
-                            style: BorderStyle.solid,
-                          ),
-                        ),
-                      )),
-                  Container(
-                      width: MediaQuery.of(context).size.width * 0.46,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          this.movieActive = false;
-                          setState(() {});
-                        },
-                        child: Text(
-                          'TV shows',
-                          style: TextStyle(
-                              color: !this.movieActive
-                                  ? Colors.white
-                                  : Colors.blue),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: !this.movieActive
-                              ? Colors.blue
-                              : Colors.transparent,
-                          side: BorderSide(
-                            width: 1.0,
-                            color: Colors.blue,
-                            style: BorderStyle.solid,
-                          ),
-                        ),
-                      )),
-                ],
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SearchBox(isMovie: _selectedPage == 0 ? true : false),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 12.0,
             ),
-            this.movieActive ? MovieScreen() : ShowScreen(),
-          ],
-        ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TabButton(
+                  text: "Movies",
+                  pageNumber: 0,
+                  selectedPage: _selectedPage,
+                  onPressed: () {
+                    _changePage(0);
+                  },
+                ),
+                TabButton(
+                  text: "TV Shows",
+                  pageNumber: 1,
+                  selectedPage: _selectedPage,
+                  onPressed: () {
+                    _changePage(1);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: PageView(
+              onPageChanged: (int page) {
+                setState(() {
+                  _selectedPage = page;
+                });
+              },
+              controller: _pageController,
+              children: [
+                Container(child: BlocBuilder<MovieBloc, MovieState>(
+                    builder: (context, state) {
+                  if (state is MovieInitial || state is MovieLoadingState) {
+                    return LoadingIndicatior();
+                  } else if (state is MovieLoadedState) {
+                    return ItemList(state.movies, true);
+                  } else if (state is MovieErrorState) {
+                    return ErrorScreen(
+                      message: state.message,
+                    );
+                  } else {
+                    return Text('');
+                  }
+                })),
+                Container(
+                  child: BlocBuilder<ShowBloc, ShowState>(
+                      builder: (context, state) {
+                    if (state is ShowInitial || state is ShowLoadingState) {
+                      return LoadingIndicatior();
+                    } else if (state is ShowLoadedState) {
+                      return ItemList(state.shows, false);
+                    } else if (state is ShowErrorState) {
+                      return ErrorScreen(
+                        message: state.message,
+                      );
+                    } else {
+                      return Text('');
+                    }
+                  }),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

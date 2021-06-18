@@ -6,7 +6,6 @@ import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/search_bloc/search_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
 import 'package:movie_app/data/repository/resporitory.dart';
-import 'package:movie_app/screens/error_screen.dart';
 import 'package:movie_app/screens/home_screen.dart';
 
 void main() {
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
               create: (context) => SearchBloc(repository: Repository()),
             ),
           ],
-          child: HomeScreen(),
+          child: Container(child: HomeScreen()),
         ),
       ),
     );
