@@ -1,15 +1,21 @@
 # movie_app
 
-A new Flutter project.
+## Install flutter and run app
 
-## Getting Started
+### Install Flutter and Dart plugins in VS code:
 
-This project is a starting point for a Flutter application.
+- Start VS Code
+- Invoke View > Command Palette
+- Type `install`, and select Extensions: Install Extensions.
+- Type `flutter` in the extensions search field, select Flutter in the list, and click Install. This also installs the required Dart plugin.
 
-A few resources to get you started if this is your first Flutter project:
+### Run app in VS code:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Open app in VS code
+- Open terminal and run: `flutter pub get` or in pubspec.yaml file click on `Get Packages`
+- Select target device - Go to `main.dart` and select target device: Emulator or external device
+- Run from terminal: `flutter run`
+- Run from VS code: Click on `Run` -> `Run Without Debugging`
 
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
