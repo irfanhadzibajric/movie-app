@@ -5,7 +5,6 @@ import 'package:movie_app/bloc/search_bloc/search_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
 import 'package:movie_app/screens/error_screen.dart';
 import 'package:movie_app/widgets/movie/movie_item_list.dart';
-import 'package:movie_app/widgets/loading_indicator.dart';
 import 'package:movie_app/widgets/show/show_item_list.dart';
 
 class SearchBox extends StatelessWidget {
@@ -125,14 +124,19 @@ class ItemSearch extends SearchDelegate<dynamic> {
             ? BlocBuilder(
                 bloc: searchBloc,
                 builder: (BuildContext context, SearchState state) {
-                  if (state is SearchMovieLoadingState) {
-                    return LoadingIndicatior();
-                  } else if (state is SearchMovieErrorState) {
+                  if (state is SearchMovieErrorState) {
                     return ErrorScreen(message: state.message);
                   } else if (state is SearchMovieLoadedState) {
                     return MovieItemList(state.movies);
                   } else {
-                    return Text('');
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          LinearProgressIndicator(),
+                          MovieItemList(items),
+                        ],
+                      ),
+                    );
                   }
                 })
             : MovieItemList(items)
@@ -140,20 +144,21 @@ class ItemSearch extends SearchDelegate<dynamic> {
             ? BlocBuilder(
                 bloc: searchBloc,
                 builder: (BuildContext context, SearchState state) {
-                  if (state is SearchShowLoadingState) {
-                    return LoadingIndicatior();
-                  } else if (state is SearchShowErrorState) {
+                  if (state is SearchShowErrorState) {
                     return ErrorScreen(message: state.message);
                   } else if (state is SearchShowLoadedState) {
-                    return ShowItemList(
-                      state.shows,
-                    );
+                    return ShowItemList(state.shows);
                   } else {
-                    return Text('');
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          LinearProgressIndicator(),
+                          ShowItemList(items),
+                        ],
+                      ),
+                    );
                   }
                 })
-            : ShowItemList(
-                items,
-              );
+            : ShowItemList(items);
   }
 }

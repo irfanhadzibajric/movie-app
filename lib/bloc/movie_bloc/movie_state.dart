@@ -15,7 +15,6 @@ class MovieInitial extends MovieState {
 class MovieLoadingState extends MovieState {}
 
 class MovieLoadedState extends MovieState {
-  // TODO: change dynamic to movieresult
   final List<MoviesItem> movies;
 
   MovieLoadedState(this.movies);
