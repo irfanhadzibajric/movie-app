@@ -20,14 +20,16 @@ class MovieInfoWidget extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: NetworkImage('$imgBase${item.backdropPath}'),
+                image: NetworkImage(item.backdropPath != null
+                    ? '$imgBase${item.backdropPath}'
+                    : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png'),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '${item.title}',
+              item.title != null ? '${item.title}' : 'No title',
               style: TextStyle(
                 fontSize: mediaQurey.height * 0.04,
                 fontWeight: FontWeight.bold,
@@ -37,7 +39,7 @@ class MovieInfoWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              '${item.overview}',
+              item.overview != null ? '${item.overview}' : 'No description.',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
