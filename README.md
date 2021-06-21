@@ -1,6 +1,6 @@
 # movie_app
 
-## Install flutter and run app
+## Install Flutter and run the app
 
 ### Install Flutter and Dart plugins in VS code:
 
