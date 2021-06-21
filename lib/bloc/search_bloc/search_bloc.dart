@@ -23,7 +23,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (event.query.length > 3) {
         try {
           yield SearchMovieLoadingState();
-          await Future.delayed(Duration(milliseconds: 1000));
           MovieResult movies =
               await repository.getMovieSearchResult(event.query);
           List<MoviesItem> movieItems = movies.results;
@@ -36,7 +35,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (event.query.length > 3) {
         try {
           yield SearchShowLoadingState();
-          await Future.delayed(Duration(milliseconds: 1000));
           ShowResult shows = await repository.getShowSearchResult(event.query);
           List<ShowItem> showItems = shows.results;
           yield SearchShowLoadedState(showItems);

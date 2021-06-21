@@ -33,11 +33,11 @@ class Repository {
     return _apiClient.getShowById(apiKey, showId);
   }
 
-  Future<MovieResult> getMovieSearchResult(String query) {
+  Future<MovieResult> getMovieSearchResult(String query) async {
     return _apiClient.getMovieSearchResult(apiKey, query);
   }
 
-  Future<ShowResult> getShowSearchResult(String query) {
+  Future<ShowResult> getShowSearchResult(String query) async {
     return _apiClient.getShowSearchResult(apiKey, query);
   }
 }
