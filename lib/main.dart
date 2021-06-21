@@ -49,8 +49,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// https://api.themoviedb.org/3/movie/550?api_key=7567e45a49ce2c511f9240fec1edb428
-
-
-// Json_seriazible flutter packages pub run build_runner build --delete-conflicting-outputs

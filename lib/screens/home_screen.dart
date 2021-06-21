@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedPage = pageNum;
       _pageController.animateToPage(
         pageNum,
-        duration: Duration(milliseconds: 1000),
+        duration: Duration(milliseconds: 200),
         curve: Curves.easeIn,
       );
     });
