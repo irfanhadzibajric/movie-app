@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:movie_app/data/models/movie/movie_info.dart';
 import 'package:movie_app/data/models/movie/movie_item.dart';
 import 'package:movie_app/data/models/movie/movie_result.dart';
 import 'package:movie_app/data/repository/resporitory.dart';
@@ -30,7 +31,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     } else if (event is FetchSingleMovieDataEvent) {
       try {
         yield SingleMovieLoadingState();
-        var movie = await repository.getMovieById(event.movieId);
+        MovieInfo movie = await repository.getMovieById(event.movieId);
         yield SingleMovieLoadedState(movie);
       } catch (e) {
         yield SingleMovieErrorState(e.toString());

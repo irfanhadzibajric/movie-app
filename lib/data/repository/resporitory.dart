@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/data/api/api_client.dart';
+import 'package:movie_app/data/models/movie/movie_info.dart';
 import 'package:movie_app/data/models/movie/movie_result.dart';
+import 'package:movie_app/data/models/show/show_info.dart';
 import 'package:movie_app/data/models/show/show_result.dart';
 
 class Repository {
@@ -23,11 +25,11 @@ class Repository {
     return _apiClient.getTopRatedShows(apiKey);
   }
 
-  Future<dynamic> getMovieById(int movieId) {
+  Future<MovieInfo> getMovieById(int movieId) {
     return _apiClient.getMovieById(apiKey, movieId);
   }
 
-  Future<dynamic> getShowById(int showId) {
+  Future<ShowInfo> getShowById(int showId) {
     return _apiClient.getShowById(apiKey, showId);
   }
 

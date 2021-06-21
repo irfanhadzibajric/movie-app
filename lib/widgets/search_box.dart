@@ -4,9 +4,9 @@ import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/search_bloc/search_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
 import 'package:movie_app/screens/error_screen.dart';
-import 'package:movie_app/widgets/movie_item_list.dart';
+import 'package:movie_app/widgets/movie/movie_item_list.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
-import 'package:movie_app/widgets/show_item_list.dart';
+import 'package:movie_app/widgets/show/show_item_list.dart';
 
 class SearchBox extends StatelessWidget {
   final bool isMovie;

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/data/models/show/show_info.dart';
 
-class ItemInfo extends StatelessWidget {
-  final dynamic item;
-  final bool isMovie;
+class ShowInfoWidget extends StatelessWidget {
+  final ShowInfo item;
 
-  const ItemInfo({Key? key, required this.isMovie, required this.item})
-      : super(key: key);
+  const ShowInfoWidget({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +20,14 @@ class ItemInfo extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: NetworkImage('$imgBase${item['backdrop_path']}'),
+                image: NetworkImage('$imgBase${item.backdropPath}'),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '${isMovie ? item['title'] : item['name']}',
+              '${item.name}',
               style: TextStyle(
                 fontSize: mediaQurey.height * 0.04,
                 fontWeight: FontWeight.bold,
@@ -38,7 +37,7 @@ class ItemInfo extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              '${item['overview']}',
+              '${item.overview}',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,

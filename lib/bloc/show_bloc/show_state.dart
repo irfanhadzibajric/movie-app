@@ -35,7 +35,7 @@ class ShowErrorState extends ShowState {
 class SingleShowLoadingState extends ShowState {}
 
 class SingleShowLoadedState extends ShowState {
-  final dynamic show;
+  final ShowInfo show;
 
   SingleShowLoadedState(this.show);
 

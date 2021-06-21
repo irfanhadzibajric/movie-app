@@ -35,7 +35,7 @@ class MovieErrorState extends MovieState {
 class SingleMovieLoadingState extends MovieState {}
 
 class SingleMovieLoadedState extends MovieState {
-  final dynamic movie;
+  final MovieInfo movie;
 
   SingleMovieLoadedState(this.movie);
 

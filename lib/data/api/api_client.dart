@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:movie_app/data/models/movie/movie_info.dart';
 import 'package:movie_app/data/models/movie/movie_result.dart';
+import 'package:movie_app/data/models/show/show_info.dart';
 import 'package:movie_app/data/models/show/show_result.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -25,11 +27,11 @@ abstract class ApiClient {
   Future<ShowResult> getTopRatedShows(@Query("api_key") String apiKey);
 
   @GET(Apis.movieById)
-  Future<dynamic> getMovieById(
+  Future<MovieInfo> getMovieById(
       @Query("api_key") String apiKey, @Path() int movieId);
 
   @GET(Apis.showById)
-  Future<dynamic> getShowById(
+  Future<ShowInfo> getShowById(
       @Query("api_key") String apiKey, @Path() int showId);
 
   @GET(Apis.movieSearchResult)

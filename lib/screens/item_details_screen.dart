@@ -5,8 +5,9 @@ import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
 import 'package:movie_app/data/repository/resporitory.dart';
 import 'package:movie_app/screens/error_screen.dart';
-import 'package:movie_app/widgets/item_info.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
+import 'package:movie_app/widgets/movie/movie_info.dart';
+import 'package:movie_app/widgets/show/show_info.dart';
 
 class ItemDetails extends StatelessWidget {
   final int id;
@@ -43,7 +44,7 @@ class ItemDetails extends StatelessWidget {
                 if (state is SingleMovieLoadingState) {
                   return LoadingIndicatior();
                 } else if (state is SingleMovieLoadedState) {
-                  return ItemInfo(isMovie: true, item: state.movie);
+                  return MovieInfoWidget(item: state.movie);
                 } else if (state is SingleMovieErrorState) {
                   return ErrorScreen(
                     message: state.message,
@@ -61,7 +62,7 @@ class ItemDetails extends StatelessWidget {
                 if (state is SingleShowLoadingState) {
                   return LoadingIndicatior();
                 } else if (state is SingleShowLoadedState) {
-                  return ItemInfo(isMovie: false, item: state.show);
+                  return ShowInfoWidget(item: state.show);
                 } else if (state is SingleShowErrorState) {
                   return ErrorScreen(
                     message: state.message,

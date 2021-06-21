@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
-import 'package:movie_app/widgets/movie_item_list.dart';
+import 'package:movie_app/widgets/movie/movie_item_list.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
 import 'package:movie_app/widgets/search_box.dart';
-import 'package:movie_app/widgets/show_item_list.dart';
+import 'package:movie_app/widgets/show/show_item_list.dart';
 import 'package:movie_app/widgets/tab_button.dart';
 
 import 'error_screen.dart';
