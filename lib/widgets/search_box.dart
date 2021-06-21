@@ -130,12 +130,12 @@ class ItemSearch extends SearchDelegate<dynamic> {
                   } else if (state is SearchMovieErrorState) {
                     return ErrorScreen(message: state.message);
                   } else if (state is SearchMovieLoadedState) {
-                    return MovieItemList(state.movies, isMovie);
+                    return MovieItemList(state.movies);
                   } else {
                     return Text('');
                   }
                 })
-            : MovieItemList(items, isMovie)
+            : MovieItemList(items)
         : query.length > 3
             ? BlocBuilder(
                 bloc: searchBloc,
@@ -145,11 +145,15 @@ class ItemSearch extends SearchDelegate<dynamic> {
                   } else if (state is SearchShowErrorState) {
                     return ErrorScreen(message: state.message);
                   } else if (state is SearchShowLoadedState) {
-                    return ShowItemList(state.shows, isMovie);
+                    return ShowItemList(
+                      state.shows,
+                    );
                   } else {
                     return Text('');
                   }
                 })
-            : ShowItemList(items, isMovie);
+            : ShowItemList(
+                items,
+              );
   }
 }

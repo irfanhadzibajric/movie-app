@@ -4,12 +4,11 @@ import 'package:movie_app/data/models/show/show_item.dart';
 import 'package:movie_app/screens/item_details_screen.dart';
 
 class ShowItemList extends StatelessWidget {
-  final bool isMovie;
   final List<ShowItem> itemList;
-  ShowItemList(this.itemList, this.isMovie);
+  ShowItemList(this.itemList);
 
-  goToItemDetails(int id, bool isMovie) {
-    Get.to(() => MovieDetails(id: id, isMovie: isMovie));
+  goToItemDetails(int id) {
+    Get.to(() => ItemDetails(id: id, isMovie: false));
   }
 
   @override
@@ -31,7 +30,7 @@ class ShowItemList extends StatelessWidget {
             return InkWell(
               onTap: () {
                 if (itemList[index].id != null)
-                  goToItemDetails(itemList[index].id!, isMovie);
+                  goToItemDetails(itemList[index].id!);
               },
               child: Container(
                   height: 90.0,
@@ -108,7 +107,7 @@ class ShowItemList extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             if (itemList[index].id != null)
-                              goToItemDetails(itemList[index].id!, isMovie);
+                              goToItemDetails(itemList[index].id!);
                           },
                           icon: Icon(Icons.chevron_right))
                     ],

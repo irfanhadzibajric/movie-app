@@ -8,10 +8,10 @@ import 'package:movie_app/screens/error_screen.dart';
 import 'package:movie_app/widgets/item_info.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
 
-class MovieDetails extends StatelessWidget {
+class ItemDetails extends StatelessWidget {
   final int id;
   final bool isMovie;
-  MovieDetails({required this.id, required this.isMovie});
+  ItemDetails({required this.id, required this.isMovie});
 
   @override
   Widget build(BuildContext context) {

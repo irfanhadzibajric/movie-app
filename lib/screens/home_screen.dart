@@ -89,8 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (state is MovieInitial || state is MovieLoadingState) {
                     return LoadingIndicatior();
                   } else if (state is MovieLoadedState) {
-                    return MovieItemList(
-                        state.movies, _selectedPage == 0 ? true : false);
+                    return MovieItemList(state.movies);
                   } else if (state is MovieErrorState) {
                     return ErrorScreen(
                       message: state.message,
@@ -105,8 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (state is ShowInitial || state is ShowLoadingState) {
                       return LoadingIndicatior();
                     } else if (state is ShowLoadedState) {
-                      return ShowItemList(
-                          state.shows, _selectedPage == 1 ? true : false);
+                      return ShowItemList(state.shows);
                     } else if (state is ShowErrorState) {
                       return ErrorScreen(
                         message: state.message,
