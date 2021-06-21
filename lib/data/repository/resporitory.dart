@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/data/api/api_client.dart';
+import 'package:movie_app/data/models/movie/movie_result.dart';
+import 'package:movie_app/data/models/show/show_result.dart';
 
 class Repository {
   Dio _dio = Dio();
@@ -13,13 +15,11 @@ class Repository {
     _apiClient = ApiClient(_dio);
   }
 
-  // TODO: change dynamic to movieresult
-  Future<dynamic> getMovies() {
+  Future<MovieResult> getMovies() {
     return _apiClient.getTopRatedMovies(apiKey);
   }
 
-  // TODO: change dynamic to showresult
-  Future<dynamic> getShows() {
+  Future<ShowResult> getShows() {
     return _apiClient.getTopRatedShows(apiKey);
   }
 
@@ -31,11 +31,11 @@ class Repository {
     return _apiClient.getShowById(apiKey, showId);
   }
 
-  Future<dynamic> getMovieSearchResult(String query) {
+  Future<MovieResult> getMovieSearchResult(String query) {
     return _apiClient.getMovieSearchResult(apiKey, query);
   }
 
-  Future<dynamic> getShowSearchResult(String query) {
+  Future<ShowResult> getShowSearchResult(String query) {
     return _apiClient.getShowSearchResult(apiKey, query);
   }
 }

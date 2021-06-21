@@ -6,13 +6,15 @@ part 'movie_result.g.dart';
 
 @JsonSerializable()
 class MovieResult extends Equatable {
+  @JsonKey(name: 'page')
   final int page;
+  @JsonKey(name: 'results')
   final List<MoviesItem> results;
 
-  const MovieResult([this.page = 1, this.results = const []]);
+  MovieResult(this.page, this.results);
 
   @override
-  List<Object> get props => [results];
+  List<Object> get props => [page, results];
 
   factory MovieResult.fromJson(Map<String, dynamic> json) =>
       _$MovieResultFromJson(json);

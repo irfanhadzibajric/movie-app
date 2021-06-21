@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
-import 'package:movie_app/widgets/item_list.dart';
+import 'package:movie_app/widgets/movie_item_list.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
 import 'package:movie_app/widgets/search_box.dart';
+import 'package:movie_app/widgets/show_item_list.dart';
 import 'package:movie_app/widgets/tab_button.dart';
 
 import 'error_screen.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _pageController.animateToPage(
         pageNum,
         duration: Duration(milliseconds: 1000),
-        curve: Curves.fastLinearToSlowEaseIn,
+        curve: Curves.easeIn,
       );
     });
   }
@@ -88,7 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (state is MovieInitial || state is MovieLoadingState) {
                     return LoadingIndicatior();
                   } else if (state is MovieLoadedState) {
-                    return ItemList(state.movies, true);
+                    return MovieItemList(
+                        state.movies, _selectedPage == 0 ? true : false);
                   } else if (state is MovieErrorState) {
                     return ErrorScreen(
                       message: state.message,
@@ -103,7 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (state is ShowInitial || state is ShowLoadingState) {
                       return LoadingIndicatior();
                     } else if (state is ShowLoadedState) {
-                      return ItemList(state.shows, false);
+                      return ShowItemList(
+                          state.shows, _selectedPage == 1 ? true : false);
                     } else if (state is ShowErrorState) {
                       return ErrorScreen(
                         message: state.message,

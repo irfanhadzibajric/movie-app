@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:movie_app/data/models/movie/movie_result.dart';
+import 'package:movie_app/data/models/show/show_result.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';
@@ -16,13 +18,11 @@ class Apis {
 abstract class ApiClient {
   factory ApiClient(Dio dio, {String baseUrl}) = _ApiClient;
 
-  // TODO: change dynamic to movieresult
   @GET(Apis.topRatedMovies)
-  Future<dynamic> getTopRatedMovies(@Query("api_key") String apiKey);
+  Future<MovieResult> getTopRatedMovies(@Query("api_key") String apiKey);
 
-  // TODO: change dynamic to showresult
   @GET(Apis.topRatedShows)
-  Future<dynamic> getTopRatedShows(@Query("api_key") String apiKey);
+  Future<ShowResult> getTopRatedShows(@Query("api_key") String apiKey);
 
   @GET(Apis.movieById)
   Future<dynamic> getMovieById(
@@ -33,10 +33,10 @@ abstract class ApiClient {
       @Query("api_key") String apiKey, @Path() int showId);
 
   @GET(Apis.movieSearchResult)
-  Future<dynamic> getMovieSearchResult(
+  Future<MovieResult> getMovieSearchResult(
       @Query("api_key") String apiKey, @Query("query") String searchString);
 
   @GET(Apis.showSearchResult)
-  Future<dynamic> getShowSearchResult(
+  Future<ShowResult> getShowSearchResult(
       @Query("api_key") String apiKey, @Query("query") String searchString);
 }

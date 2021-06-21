@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movie_app/data/models/show/show_item.dart';
+import 'package:movie_app/data/models/show/show_result.dart';
 import 'package:movie_app/data/repository/resporitory.dart';
 
 part 'show_event.dart';
@@ -19,9 +21,9 @@ class ShowBloc extends Bloc<ShowEvent, ShowState> {
     if (event is FetchShowDataEvent) {
       try {
         yield ShowLoadingState();
-        var shows = await repository.getShows();
-        shows = shows['results'].getRange(0, 10).toList();
-        yield ShowLoadedState(shows);
+        ShowResult shows = await repository.getShows();
+        List<ShowItem> showItems = shows.results.getRange(0, 10).toList();
+        yield ShowLoadedState(showItems);
       } catch (e) {
         yield ShowErrorState(e.toString());
       }

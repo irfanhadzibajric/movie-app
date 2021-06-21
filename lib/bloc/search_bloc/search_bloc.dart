@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movie_app/data/models/movie/movie_item.dart';
+import 'package:movie_app/data/models/movie/movie_result.dart';
+import 'package:movie_app/data/models/show/show_item.dart';
+import 'package:movie_app/data/models/show/show_result.dart';
 import 'package:movie_app/data/repository/resporitory.dart';
 
 part 'search_event.dart';
@@ -19,8 +23,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (event.query.length > 3) {
         try {
           yield SearchMovieLoadingState();
-          var movies = await repository.getMovieSearchResult(event.query);
-          yield SearchMovieLoadedState(movies['results']);
+          MovieResult movies =
+              await repository.getMovieSearchResult(event.query);
+          List<MoviesItem> movieItems = movies.results;
+          yield SearchMovieLoadedState(movieItems);
         } catch (e) {
           yield SearchMovieErrorState(e.toString());
         }
@@ -29,8 +35,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (event.query.length > 3) {
         try {
           yield SearchShowLoadingState();
-          var movies = await repository.getShowSearchResult(event.query);
-          yield SearchShowLoadedState(movies['results']);
+          ShowResult shows = await repository.getShowSearchResult(event.query);
+          List<ShowItem> showItems = shows.results;
+          yield SearchShowLoadedState(showItems);
         } catch (e) {
           yield SearchShowErrorState(e.toString());
         }

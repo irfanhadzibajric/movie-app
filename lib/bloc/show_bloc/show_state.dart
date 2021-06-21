@@ -16,7 +16,7 @@ class ShowLoadingState extends ShowState {}
 
 class ShowLoadedState extends ShowState {
   // TODO: change dynamic to showresult
-  final dynamic shows;
+  final List<ShowItem> shows;
 
   ShowLoadedState(this.shows);
 

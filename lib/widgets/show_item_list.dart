@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/data/models/show/show_item.dart';
 import 'package:movie_app/screens/item_details_screen.dart';
 
-class ItemList extends StatelessWidget {
+class ShowItemList extends StatelessWidget {
   final bool isMovie;
-  final List itemList;
-  ItemList(this.itemList, this.isMovie);
+  final List<ShowItem> itemList;
+  ShowItemList(this.itemList, this.isMovie);
 
   goToItemDetails(int id, bool isMovie) {
     Get.to(() => MovieDetails(id: id, isMovie: isMovie));
@@ -29,7 +30,8 @@ class ItemList extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                goToItemDetails(itemList[index]['id'], isMovie);
+                if (itemList[index].id != null)
+                  goToItemDetails(itemList[index].id!, isMovie);
               },
               child: Container(
                   height: 90.0,
@@ -47,8 +49,11 @@ class ItemList extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: NetworkImage(
-                                        '$imgBase${itemList[index]['poster_path']}'))),
+                                    image: NetworkImage(itemList[index]
+                                                .posterPath !=
+                                            null
+                                        ? '$imgBase${itemList[index].posterPath}'
+                                        : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png'))),
                           ),
                           SizedBox(
                             width: 7,
@@ -81,9 +86,9 @@ class ItemList extends StatelessWidget {
                               Container(
                                 width: mediaQuery.width * 0.50,
                                 child: Text(
-                                  isMovie
-                                      ? '${itemList[index]['title']}'
-                                      : '${itemList[index]['name']}',
+                                  itemList[index].name != null
+                                      ? '${itemList[index].name}'
+                                      : 'No name',
                                   style: TextStyle(
                                     fontSize: mediaQuery.height * 0.023,
                                     fontWeight: FontWeight.w500,
@@ -102,7 +107,8 @@ class ItemList extends StatelessWidget {
                       ),
                       IconButton(
                           onPressed: () {
-                            goToItemDetails(itemList[index]['id'], isMovie);
+                            if (itemList[index].id != null)
+                              goToItemDetails(itemList[index].id!, isMovie);
                           },
                           icon: Icon(Icons.chevron_right))
                     ],

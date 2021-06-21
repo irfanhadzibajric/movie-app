@@ -12,7 +12,7 @@ class SearchInitial extends SearchState {}
 class SearchMovieLoadingState extends SearchState {}
 
 class SearchMovieLoadedState extends SearchState {
-  final dynamic movies;
+  final List<MoviesItem> movies;
 
   SearchMovieLoadedState(this.movies);
 
@@ -31,7 +31,7 @@ class SearchMovieErrorState extends SearchState {
 class SearchShowLoadingState extends SearchState {}
 
 class SearchShowLoadedState extends SearchState {
-  final dynamic shows;
+  final List<ShowItem> shows;
 
   SearchShowLoadedState(this.shows);
 

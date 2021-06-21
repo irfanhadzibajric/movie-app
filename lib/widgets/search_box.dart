@@ -4,8 +4,9 @@ import 'package:movie_app/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movie_app/bloc/search_bloc/search_bloc.dart';
 import 'package:movie_app/bloc/show_bloc/show_bloc.dart';
 import 'package:movie_app/screens/error_screen.dart';
-import 'package:movie_app/widgets/item_list.dart';
+import 'package:movie_app/widgets/movie_item_list.dart';
 import 'package:movie_app/widgets/loading_indicator.dart';
+import 'package:movie_app/widgets/show_item_list.dart';
 
 class SearchBox extends StatelessWidget {
   final bool isMovie;
@@ -85,7 +86,7 @@ class SearchBox extends StatelessWidget {
 }
 
 class ItemSearch extends SearchDelegate<dynamic> {
-  final List<dynamic> items;
+  var items;
   final bool isMovie;
   SearchBloc searchBloc;
   ItemSearch(this.items, this.isMovie, this.searchBloc);
@@ -129,12 +130,12 @@ class ItemSearch extends SearchDelegate<dynamic> {
                   } else if (state is SearchMovieErrorState) {
                     return ErrorScreen(message: state.message);
                   } else if (state is SearchMovieLoadedState) {
-                    return ItemList(state.movies, isMovie);
+                    return MovieItemList(state.movies, isMovie);
                   } else {
                     return Text('');
                   }
                 })
-            : ItemList(items, isMovie)
+            : MovieItemList(items, isMovie)
         : query.length > 3
             ? BlocBuilder(
                 bloc: searchBloc,
@@ -144,11 +145,11 @@ class ItemSearch extends SearchDelegate<dynamic> {
                   } else if (state is SearchShowErrorState) {
                     return ErrorScreen(message: state.message);
                   } else if (state is SearchShowLoadedState) {
-                    return ItemList(state.shows, isMovie);
+                    return ShowItemList(state.shows, isMovie);
                   } else {
                     return Text('');
                   }
                 })
-            : ItemList(items, isMovie);
+            : ShowItemList(items, isMovie);
   }
 }

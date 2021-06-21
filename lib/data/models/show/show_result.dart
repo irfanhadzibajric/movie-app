@@ -6,13 +6,15 @@ part 'show_result.g.dart';
 
 @JsonSerializable()
 class ShowResult extends Equatable {
+  @JsonKey(name: 'page')
   final int page;
+  @JsonKey(name: 'results')
   final List<ShowItem> results;
 
-  const ShowResult([this.page = 1, this.results = const []]);
+  ShowResult(this.page, this.results);
 
   @override
-  List<Object> get props => [results];
+  List<Object> get props => [page, results];
 
   factory ShowResult.fromJson(Map<String, dynamic> json) =>
       _$ShowResultFromJson(json);

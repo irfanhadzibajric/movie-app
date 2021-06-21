@@ -8,19 +8,21 @@ part of 'show_item.dart';
 
 ShowItem _$ShowItemFromJson(Map<String, dynamic> json) {
   return ShowItem(
-    json['backdrop_path'] as String,
-    json['first_air_date'] as String,
-    (json['genre_ids'] as List<dynamic>).map((e) => e as int).toList(),
-    json['id'] as int,
-    json['name'] as String,
-    (json['origin_country'] as List<dynamic>).map((e) => e as String).toList(),
-    json['original_language'] as String,
-    json['original_name'] as String,
-    json['overview'] as String,
-    (json['popularity'] as num).toDouble(),
-    json['poster_path'] as String,
-    (json['vote_average'] as num).toDouble(),
-    json['vote_count'] as int,
+    json['backdrop_path'] as String?,
+    json['first_air_date'] as String?,
+    (json['genre_ids'] as List<dynamic>?)?.map((e) => e as int).toList(),
+    json['id'] as int?,
+    json['name'] as String?,
+    (json['origin_country'] as List<dynamic>?)
+        ?.map((e) => e as String)
+        .toList(),
+    json['original_language'] as String?,
+    json['original_name'] as String?,
+    json['overview'] as String?,
+    (json['popularity'] as num?)?.toDouble(),
+    json['poster_path'] as String?,
+    (json['vote_average'] as num?)?.toDouble(),
+    json['vote_count'] as int?,
   );
 }
 
